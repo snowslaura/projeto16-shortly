@@ -5,13 +5,16 @@ dotenv.config();
 
 import authRouter from "./../routers/AuthRouter.js"
 import urlRouter from "../routers/UrlRouter.js";
+import userRouter from "../routers/usersRouter.js";
 
 const app = express()
 
 app.use(cors())
 app.use(json())
+
 app.use(authRouter)
 app.use(urlRouter)
+app.use(userRouter)
 
 
 const PORT = process.env.PORT || 4000

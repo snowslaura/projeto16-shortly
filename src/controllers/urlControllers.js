@@ -31,7 +31,7 @@ export async function getUrl(req,res){
     
     try{
         const {rows:result} = await db.query(`SELECT * FROM "shortlyUrls" where id=$1`,[id])
-        if(result.length<1 || result.deleteAt){
+        if(result.length<1 || result[0].deletedAt!==null){
             return res.sendStatus(404)
         }
 
@@ -53,7 +53,7 @@ export async function getShortUrl(req,res){
    const {shortUrl} = req.params
     try{
         const {rows:result} = await db.query(`SELECT * FROM "shortlyUrls" WHERE "shortUrl"=$1`,[shortUrl])
-        if(result.length<1 || result.deleteAt){
+        if(result.length<1 || result[0].deletedAt!==null){
             return res.sendStatus(404)
         }
         let views = result[0].visitCount
@@ -87,13 +87,11 @@ export async function deleteShortUrl(req,res){
             return res.sendStatus(401)
         }
 
-        if(result.deletedAt!==null){
+        if(result[0].deletedAt!==null){
             return res.sendStatus(406)
         }
 
         await db.query(`UPDATE "shortlyUrls" SET "deletedAt"=NOW() WHERE "id"=$1`,[id])
-        const{rows:lalala}=await db.query(`SELECT * FROM "shortlyUrls"`)
-        console.log(lalala)
         res.sendStatus(204)
 
     }catch(e){
