@@ -9,7 +9,11 @@ export async function getUsers(req,res){
         LEFT JOIN "shortlyUrls"
         ON "shortlyUrls"."userId" = users.id
         WHERE "deletedAt" is NULL AND users.id=$1
-        GROUP BY users.id`,[id])     
+        GROUP BY users.id`,[id])
+        
+        if(result.length===0){
+           return res.sendStatus(404)
+        }
         
        
         const {rows:shortenedUrls} = await db.query(`
