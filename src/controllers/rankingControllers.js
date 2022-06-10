@@ -3,12 +3,12 @@ import db from "./../app/db.js"
 export async function getRanking(req,res){
     try{
         const {rows:result} = await db.query(`
-        SELECT "shortlyUrls"."userId" as id, users.name, COUNT("url") as "linksCount", SUM("visitCount") as "visitCount" 
+        SELECT users.id, users.name, COUNT("url") as "linksCount", COALESCE(SUM("visitCount"),0) as "visitCount" 
         FROM "shortlyUrls"
-        JOIN users
+        RIGHT JOIN users
         ON "shortlyUrls"."userId" = users.id
         WHERE "deletedAt" IS NULL
-        GROUP BY "shortlyUrls"."userId",users.name
+        GROUP BY users.id,users.name
         ORDER BY "visitCount" DESC
         LIMIT 10
         `)
