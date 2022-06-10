@@ -31,6 +31,7 @@ export async function getUrl(req,res){
     
     try{
         const {rows:result} = await db.query(`SELECT * FROM "shortlyUrls" where id=$1`,[id])
+
         if(result.length<1 || result[0].deletedAt!==null){
             return res.sendStatus(404)
         }
