@@ -3,8 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
-import authRouter from "./../routers/AuthRouter.js"
-import urlRouter from "../routers/UrlRouter.js";
+import authRouter from "./../routers/authRouter.js"
+import urlRouter from "../routers/urlRouter.js";
 import userRouter from "../routers/usersRouter.js";
 import rankingRouter from "../routers/rankingRouter.js";
 
