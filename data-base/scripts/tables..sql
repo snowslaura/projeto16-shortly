@@ -8,24 +8,18 @@ CREATE TABLE "users" (
 
 CREATE TABLE "shortlyUrls" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"userId" integer NOT NULL,
+	"userId" integer NOT NULL REFERENCES "users"("id"),
 	"url" TEXT NOT NULL,
 	"shortUrl" TEXT NOT NULL,
 	"visitCount" integer NOT NULL,
 	"createdAt" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()	
 );
 
-CREATE TABLE "ranking" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"userId" integer NOT NULL,
-	"visitCount" integer NOT NULL,
-	"createdAt" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()	
-);
-
 CREATE TABLE "sessions" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"userId" integer NOT NULL,
+	"userId" integer NOT NULL REFERENCES "users"("id"),
+	"token" TEXT NOT NULL,
 	"createdAt" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()	
 );
 
-Alter table "shortlyUrls" ADD "deletedAt" TIMESTAMP WITHOUT TIME ZONE
+
